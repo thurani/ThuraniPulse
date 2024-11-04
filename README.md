@@ -1,2 +1,3 @@
 # ThuraniPulse
-This is an assignment to create a fullstack application about me and my lifestyle.
+
+This is an assignment to create a fullstack application about me.

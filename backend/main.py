@@ -3,14 +3,20 @@ from pydantic import BaseModel
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
-conn = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    passwd = "root",
-    database = "thuraniprofiledb"
-)
+def get_db_connection():
+    """Function to create a MySQL connection."""
+    try:
+        conn = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            passwd = "root",
+            database = "thuraniprofiledb"
+        )
+        return conn
+    except ConnectionError as e:
+        raise HTTPException(status_code=500, detail=f"Database connection error: {str(e)}")
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,13 +33,39 @@ class UserCreate(BaseModel):
     emailaddress: str
     location: str
 
+class CreateSkill(BaseModel):
+    user_id: int
+    skill_name: str
+
+class UserHobby(BaseModel):
+    user_id: int
+    hobby_name: str
+    description: str
+
 @app.get("/")
 def root():
     return {"message":"Hello World"}
 
-@app.get("/get_users")
+@app.get("/get_users/")
 def get_users():
+    conn = get_db_connection()
     cursor = conn.cursor(dictionary = True)
     cursor.execute("select * from users")
+    records = cursor.fetchall()
+    return records
+
+@app.get("/get_skills/")
+def get_skills():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary = True)
+    cursor.execute("select * from skills")
+    records = cursor.fetchall()
+    return records
+
+@app.get("/get_hobbies/")
+def get_hobbies():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary = True)
+    cursor.execute("select * from hobbies")
     records = cursor.fetchall()
     return records

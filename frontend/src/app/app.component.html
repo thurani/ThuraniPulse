@@ -6,8 +6,27 @@
       <h6 class="card-subtitle mb-2 text-muted" *ngFor="let user of users">{{user.emailaddress}}</h6>
       <h6 class="card-subtitle mb-2 text-muted" *ngFor="let user of users">{{user.location}}</h6>
       <p class="card-text" *ngFor="let user of users">{{user.summary}}</p>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
+      <button class="btn btn-primary" type="submit" style='margin-right:16px' (click)="showDiv('hobbies')">Show Hobbies</button>
+      <button class="btn btn-primary" type="submit" (click)="showDiv('skills')">Show Skills</button>
     </div>
   </div><br/><br/>
+  <div *ngIf="selectedDiv === 'skills'">
+    <h5>SKILLS</h5>
+    <div class="container">
+      <div class="row">
+        <div class="col" *ngFor="let skill of skills">&#9679;{{skill.skill_name}}</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectedDiv === 'hobbies'">
+    <h5>HOBBIES</h5>
+    <div class="container">
+      <div class="row">
+        <div class="col" *ngFor="let hobby of hobbies">&#9679;{{hobby.hobby_name}}</div>
+      </div>
+      <!-- <div class="row">
+        <div class="col" *ngFor="let hobby of hobbies">{{hobby.description}}</div>
+      </div> -->
+    </div>
+  </div>
 </div>

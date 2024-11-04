@@ -14,40 +14,40 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 
 export class AppComponent {
-  newuser = "";
-
   users:any = []
+  skills:any = []
+  hobbies:any = []
 
   APIURL = "http://localhost:8000/";
 
   constructor(private http:HttpClient){}
 
+  selectedDiv: string = '';
+
   ngOnInit(){
     this.get_users();
+    this.get_skills();
+    this.get_hobbies();
+  }
+
+  showDiv(divId: string) {
+    this.selectedDiv = divId;
   }
 
   get_users(){
-    this.http.get(this.APIURL + "get_users").subscribe((res)=>{
+    this.http.get(this.APIURL + "get_users/").subscribe((res)=>{
       this.users = res;
     })
   }
-
-  add_user(){
-    let body = new FormData();
-    body.append("user", this.newuser);
-    this.http.post(this.APIURL + "add_user", body).subscribe((res)=>{
-      alert(res);
-      this.newuser = "";
-      this.get_users();
+  get_skills(){
+    this.http.get(this.APIURL + "get_skills/").subscribe((res)=>{
+      this.skills = res;
     })
   }
 
-  delete_user(id:any){
-    let body = new FormData();
-    body.append("id", id);
-    this.http.post(this.APIURL + "delete_user", body).subscribe((res)=>{
-      alert(res);
-      this.get_users();
+  get_hobbies(){
+    this.http.get(this.APIURL + "get_hobbies/").subscribe((res)=>{
+      this.hobbies = res;
     })
   }
 }
