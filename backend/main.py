@@ -15,7 +15,7 @@ def get_db_connection():
             database = "thuraniprofiledb"
         )
         return conn
-    except ConnectionError as e:
+    except mysql.connector.Error as e:
         raise HTTPException(status_code=500, detail=f"Database connection error: {str(e)}")
 
 app.add_middleware(
@@ -48,24 +48,42 @@ def root():
 
 @app.get("/get_users/")
 def get_users():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary = True)
-    cursor.execute("select * from users")
-    records = cursor.fetchall()
-    return records
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary = True)
+        cursor.execute("select * from users")
+        records = cursor.fetchall()
+        return records
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.get("/get_skills/")
 def get_skills():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary = True)
-    cursor.execute("select * from skills")
-    records = cursor.fetchall()
-    return records
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary = True)
+        cursor.execute("select * from skills")
+        records = cursor.fetchall()
+        return records
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.get("/get_hobbies/")
 def get_hobbies():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary = True)
-    cursor.execute("select * from hobbies")
-    records = cursor.fetchall()
-    return records
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary = True)
+        cursor.execute("select * from hobbies")
+        records = cursor.fetchall()
+        return records
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        cursor.close()
+        conn.close()

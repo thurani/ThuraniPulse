@@ -12,21 +12,17 @@
   </div><br/><br/>
   <div *ngIf="selectedDiv === 'skills'">
     <h5><b>SKILLS</b></h5>
-    <div class="container">
-      <div class="row">
-        <div class="col" *ngFor="let skill of skills"><b>&#9679;{{skill.skill_name}}</b></div>
-      </div>
+    <div class="row">
+      <div class="col" *ngFor="let skill of skills">&#9679;{{skill.skill_name}}</div>
     </div>
   </div>
   <div *ngIf="selectedDiv === 'hobbies'">
     <h5><b>HOBBIES</b></h5>
-    <div class="container">
-      <div class="row">
-        <div class="col" *ngFor="let hobby of hobbies"><b>&#9679;{{hobby.hobby_name}}</b></div>
-      </div>
-      <div class="row">
-        <div class="col" *ngFor="let hobby of hobbies">{{hobby.description}}</div>
-      </div>
+    <div class="row">
+      <div class="col" *ngFor="let hobby of hobbies"><b>&#9679;{{hobby.hobby_name}}</b></div>
+    </div>
+    <div class="row">
+      <div class="col" *ngFor="let hobby of hobbies">{{hobby.description}}</div>
     </div>
   </div>
 </div>
